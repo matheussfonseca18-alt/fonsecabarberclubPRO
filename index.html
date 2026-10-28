@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#101110" />
+    <title>Fonseca Barber Club • Gestão</title>
+  </head>
+  <body>
+    <div id="app">
+      <section
+        id="boot-status"
+        role="status"
+        style="
+          max-width: 620px;
+          margin: 12vh auto;
+          padding: 32px;
+          font:
+            16px/1.6 &quot;Segoe UI&quot;,
+            sans-serif;
+          color: #e8e7e2;
+          background: #1b1b19;
+          border: 1px solid #8d7548;
+          border-radius: 12px;
+        "
+      >
+        <small style="color: #c7a66b">FONSECA BARBER CLUB · DEMONSTRAÇÃO</small>
+        <h1 id="boot-title">Abrindo o sistema…</h1>
+        <p id="boot-message">Aguarde o carregamento do preview local.</p>
+        <a href="http://127.0.0.1:5174/#Dashboard" style="color: #d9bb80"
+          >Abrir pelo endereço local</a
+        >
+        <noscript
+          ><p>
+            Ative o JavaScript neste navegador para abrir o sistema.
+          </p></noscript
+        >
+      </section>
+    </div>
+    <script>
+      (() => {
+        document.body.style.background = "#101110";
+        const showFailure = (title, message) => {
+          const panel = document.getElementById("boot-status");
+          if (!panel || panel.getAttribute("role") === "alert") return;
+          panel.setAttribute("role", "alert");
+          document.getElementById("boot-title").textContent = title;
+          document.getElementById("boot-message").textContent = message;
+        };
+        if (location.protocol === "file:") {
+          showFailure(
+            "Abra o sistema pelo servidor local",
+            "Este index.html não funciona por duplo clique. Execute npm run dev -- --port 5174 --strictPort na pasta do projeto e abra http://127.0.0.1:5174/. Nenhum dado foi perdido.",
+          );
+        } else {
+          window.addEventListener(
+            "error",
+            () =>
+              showFailure(
+                "Não foi possível iniciar o sistema",
+                "O carregamento do aplicativo falhou. Recarregue a página; se persistir, execute npm run dev -- --port 5174 --strictPort e consulte a saída do terminal.",
+              ),
+            true,
+          );
+          window.addEventListener("unhandledrejection", () =>
+            showFailure(
+              "Não foi possível iniciar o sistema",
+              "Houve uma falha durante a inicialização. Recarregue a página ou reinicie o preview com npm run dev -- --port 5174 --strictPort.",
+            ),
+          );
+          setTimeout(
+            () =>
+              showFailure(
+                "O carregamento está demorando",
+                "O aplicativo ainda não iniciou. Confirme se npm run dev -- --port 5174 --strictPort está ativo e recarregue esta página.",
+              ),
+            12000,
+          );
+        }
+      })();
+    </script>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
