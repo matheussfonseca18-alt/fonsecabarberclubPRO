@@ -9,8 +9,13 @@ const authRoute =
   location.pathname === "/auth/login";
 const bookingRoute =
   location.pathname === "/agendar" || location.pathname === "/agendar/";
+const barberRoute =
+  location.pathname === "/barbeiro" ||
+  location.pathname.startsWith("/barbeiro/");
 const mode =
-  authRoute || bookingRoute ? "real" : resolveDataMode(location.search);
+  authRoute || bookingRoute || barberRoute
+    ? "real"
+    : resolveDataMode(location.search);
 document.documentElement.dataset.dataMode = mode;
 if (authRoute) {
   const { startAuthPage } = await import("./auth/page");
@@ -40,6 +45,9 @@ if (authRoute) {
 } else if (bookingRoute) {
   const { startBookingPage } = await import("./booking-page");
   startBookingPage();
+} else if (barberRoute) {
+  const { startBarberPage } = await import("./barber-page");
+  startBarberPage();
 } else if (mode === "demo") {
   await import("./demo-app");
 } else {

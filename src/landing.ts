@@ -1,4 +1,12 @@
 import "./landing.css";
+import "./home-enhancement.css";
+import { homeContent } from "./home-content";
+import {
+  renderLogo,
+  renderPlans,
+  renderSocials,
+  renderVisit,
+} from "./home-sections";
 
 // This page is presentation only. Links leave it through a full document
 // navigation; no auth, data, booking, storage or agenda code is loaded here.
@@ -8,6 +16,11 @@ export function startLanding() {
 
   const root = document.querySelector<HTMLDivElement>("#app");
   if (!root) throw new Error("Landing root unavailable");
+
+  const today = new Date().toISOString().slice(0, 10);
+  const officialLogo = renderLogo(homeContent, today);
+  const plans = renderPlans(homeContent, today);
+  const visit = renderVisit(homeContent, today);
 
   root.innerHTML = `
     <div class="fc-home" id="inicio">
@@ -20,6 +33,8 @@ export function startLanding() {
         </a>
         <nav class="fc-home__nav" aria-label="Navegação da página inicial">
           <a href="#clube">O clube</a>
+          ${plans ? '<a href="#planos">Planos</a>' : ""}
+          ${visit ? '<a href="#encontre">Onde estamos</a>' : ""}
           <a href="#experiencia">A experiência</a>
         </nav>
         <a class="fc-home__team-link" href="/auth/login">
@@ -46,7 +61,9 @@ export function startLanding() {
             </div>
           </div>
 
-          <div class="fc-home__art" aria-hidden="true">
+          ${
+            officialLogo ||
+            `<div class="fc-home__art" aria-hidden="true">
             <div class="fc-home__art-top"><span>FONSECA</span><span>BARBER CLUB</span></div>
             <div class="fc-home__arch fc-home__arch--outer"></div>
             <div class="fc-home__arch fc-home__arch--inner"></div>
@@ -54,7 +71,8 @@ export function startLanding() {
             <div class="fc-home__art-copy"><span>A arte</span><span>de ser</span><em>você.</em></div>
             <span class="fc-home__art-side">O SEU MOMENTO</span>
             <div class="fc-home__art-bottom"><span>CLÁSSICO NA ESSÊNCIA.</span><span>SEU NA EXPRESSÃO.</span></div>
-          </div>
+          </div>`
+          }
         </section>
 
         <section id="clube" class="fc-home__club" aria-labelledby="fc-home-club-title">
@@ -97,6 +115,15 @@ export function startLanding() {
           </div>
         </section>
 
+        ${plans}
+
+        <section class="fc-home__booking" aria-labelledby="fc-home-booking-title">
+          <div><p class="fc-home__eyebrow">SEU PRÓXIMO MOMENTO</p><h2 id="fc-home-booking-title">Seu estilo começa<br><em>com uma escolha.</em></h2></div>
+          <a class="fc-home__button fc-home__button--gold" href="/agendar">Agendar meu horário <span aria-hidden="true">↗</span></a>
+        </section>
+
+        ${visit}
+
         <section class="fc-home__team" aria-labelledby="fc-home-team-title">
           <div>
             <p class="fc-home__eyebrow">ÁREA INTERNA</p>
@@ -111,7 +138,7 @@ export function startLanding() {
         <a class="fc-home__brand fc-home__brand--footer" href="/inicio" aria-label="Fonseca Barber Club — início">
           <span>FONSECA</span><span class="fc-home__brand-sub">BARBER CLUB</span>
         </a>
-        <p>Estilo é pessoal.</p>
+        <div class="fc-home__footer-connect"><p>Estilo é pessoal.</p>${renderSocials(homeContent, today)}</div>
         <a class="fc-home__back-top" href="#inicio">Voltar ao início <span aria-hidden="true">↑</span></a>
       </footer>
     </div>
