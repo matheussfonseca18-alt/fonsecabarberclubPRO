@@ -1,0 +1,331 @@
+.real-mode-notice {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 16px 18px;
+  border: 1px solid #61583d;
+  border-left: 3px solid var(--gold);
+  background: #24251b;
+  border-radius: 7px;
+  margin-bottom: 24px;
+}
+.real-mode-notice > span {
+  font-size: 26px;
+  color: var(--gold);
+}
+.real-mode-notice b,
+.real-mode-notice div > span {
+  display: block;
+}
+.real-mode-notice b {
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+.real-mode-notice div > span {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #b1b1a1;
+}
+.real-intro {
+  padding: 30px 8px 32px;
+  max-width: 700px;
+}
+.real-intro h2 {
+  font-family: Georgia, serif;
+  font-size: 46px;
+  line-height: 1.18;
+  letter-spacing: -1px;
+  margin: 16px 0;
+}
+.real-intro p {
+  max-width: 520px;
+  font-size: 14px;
+}
+.real-primary-link {
+  display: inline-flex;
+  gap: 32px;
+  align-items: center;
+  padding: 13px 18px;
+  margin-top: 8px;
+  background: #c7a66b;
+  color: #181b15;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 650;
+}
+.real-stage-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.real-stage-card {
+  background: #1b1e18;
+  border: 1px solid #363a2d;
+  border-radius: 9px;
+  padding: 22px;
+  transition: border-color 0.2s;
+}
+.real-stage-card:hover {
+  border-color: var(--gold);
+}
+.real-stage-card > span {
+  display: block;
+  color: #a69165;
+  font-family: Georgia, serif;
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+.real-stage-card h2 {
+  font-size: 18px;
+}
+.real-stage-card p {
+  font-size: 12px;
+}
+.real-stage-card b {
+  font-size: 12px;
+  color: var(--gold);
+}
+.real-unavailable {
+  display: flex;
+  gap: 22px;
+  padding: 30px;
+  background: #191c17;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin: 22px 0;
+}
+.real-symbol {
+  display: grid;
+  place-items: center;
+  flex: 0 0 48px;
+  height: 48px;
+  background: #272b21;
+  color: var(--gold);
+  font-size: 27px;
+  border-radius: 10px;
+}
+.real-unavailable h2 {
+  font-size: 21px;
+  margin-top: 10px;
+}
+.real-unavailable p {
+  max-width: 740px;
+}
+.real-unavailable p:last-child {
+  margin-bottom: 0;
+}
+.real-footnote {
+  font-size: 11px;
+  color: #969d8b;
+  line-height: 1.6;
+}
+.real-query-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  padding: 18px 0 0;
+}
+.real-query-actions span {
+  font-size: 12px;
+  color: #a8ac9e;
+}
+.real-inline-link {
+  display: inline-block;
+  font-size: 12px;
+  color: var(--gold);
+  margin: 6px 0 22px;
+}
+.real-status-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  overflow: hidden;
+  margin: 20px 0;
+}
+.real-status-grid > div {
+  padding: 20px;
+  background: #1c1f19;
+}
+.real-status-grid dt {
+  font-size: 11px;
+  color: #a8ac9e;
+  margin-bottom: 9px;
+}
+.real-status-grid dd {
+  margin: 0;
+  font-size: 14px;
+}
+.real-indicators {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.real-panel {
+  margin-top: 20px;
+  padding: 24px;
+}
+.real-panel > .notice {
+  margin: 20px 0;
+}
+.real-steps {
+  list-style: none;
+  padding: 0;
+  margin: 24px 0;
+}
+.real-steps li {
+  display: flex;
+  gap: 18px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+.real-steps li > span {
+  color: var(--gold);
+  font-family: Georgia, serif;
+  font-size: 23px;
+}
+.real-steps p {
+  margin: 8px 0;
+}
+.real-steps b {
+  font-size: 14px;
+}
+.real-tag {
+  display: inline-block;
+  border: 1px solid #465039;
+  color: #b9c5a6;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+.real-tag.pending {
+  border-color: #564e38;
+  color: #bdad87;
+}
+.real-requirements {
+  padding-left: 20px;
+  font-size: 13px;
+  color: #b9bcb0;
+  line-height: 1.7;
+}
+.real-requirements li {
+  margin: 12px 0;
+}
+.real-sidebar-bottom {
+  position: static;
+  margin-top: 24px;
+  padding-top: 20px;
+}
+.real-sidebar-bottom b {
+  font-size: 10px;
+  font-weight: 500;
+  color: #aaa;
+}
+.real-sidebar-bottom a {
+  display: block;
+  font-size: 10px;
+  color: var(--gold);
+  margin-top: 14px;
+}
+#real-modal {
+  width: min(620px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+}
+#real-modal fieldset {
+  border: 1px solid #34382d;
+  margin: 20px 0;
+  padding: 18px;
+  border-radius: 7px;
+  min-width: 0;
+}
+#real-modal legend {
+  font-size: 11px;
+  color: #a6aa9b;
+  padding: 0 8px;
+}
+#real-modal input {
+  width: 100%;
+  min-width: 0;
+  padding: 11px 12px;
+  border: 1px solid #363b30;
+  border-radius: 6px;
+  background: #161913;
+  color: #a7ad9c;
+}
+#real-modal input:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.demo-mode-return {
+  color: var(--gold);
+  font-size: 11px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+@media (max-width: 850px) {
+  .real-stage-grid {
+    gap: 10px;
+  }
+  .real-stage-card {
+    padding: 18px;
+  }
+  .real-intro h2 {
+    font-size: 40px;
+  }
+  .real-panel {
+    padding: 18px;
+  }
+}
+@media (max-width: 580px) {
+  .real-stage-grid,
+  .real-status-grid,
+  .real-indicators {
+    grid-template-columns: 1fr;
+  }
+  .real-stage-card {
+    padding: 20px;
+  }
+  .real-stage-card > span {
+    margin-bottom: 10px;
+  }
+  .real-intro {
+    padding: 18px 2px 26px;
+  }
+  .real-intro h2 {
+    font-size: 37px;
+  }
+  .real-unavailable {
+    padding: 20px;
+    gap: 14px;
+    flex-direction: column;
+  }
+  .real-symbol {
+    flex: none;
+    width: 40px;
+    height: 40px;
+  }
+  .real-query-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .real-query-actions button {
+    width: 100%;
+  }
+  .real-mode-notice {
+    padding: 14px;
+  }
+  .real-mode-notice div > span {
+    font-size: 11px;
+  }
+  #real-modal .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .real-primary-link {
+    gap: 20px;
+  }
+  .real-page .page-heading p {
+    line-height: 1.5;
+  }
+}

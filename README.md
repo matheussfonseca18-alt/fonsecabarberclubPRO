@@ -1,46 +1,25 @@
-# Fonseca Barber Club
+# Fonseca Barber Club — checkpoint C01
 
-Protótipo frontend de gestão de barbearia em português brasileiro, desenvolvido com TypeScript e Vite. Todos os nomes, valores e registros são fictícios. Não é um sistema de produção.
+Frontend local em português, identidade própria preta e dourada. Inclui administração demonstrativa isolada, apresentação e preparação de agendamento. **Não está liberado para operação em produção.**
 
-## Executar localmente
+`/inicio` apresenta o projeto. `/agendar` segue serviço → profissional → complementos → horários compatíveis → revisão, com adapter real inativo. A confirmação continua bloqueada. `/` usa dados reais indisponíveis; somente `?mode=demo` carrega fixtures sinalizadas. Não há fallback fictício no modo real.
 
-Requer Node.js 22.13+ na linha 22, ou Node.js 24+ e npm.
+## Executar
 
-```sh
-git clone https://github.com/matheussfonseca18-alt/fonsecabarberclubPRO.git
-cd fonsecabarberclubPRO
-npm ci
-npm run dev -- --port 5174 --strictPort
-```
+Requer Node.js compatível com Vite 7 e suporte a `--experimental-strip-types`.
 
-Abra http://127.0.0.1:5174/. O servidor escuta somente na interface local. Não abra `index.html` por duplo clique.
+`npm ci`
 
-## Verificações
+`npm run dev -- --port 5174 --strictPort`
 
-```sh
-npm run typecheck
-npm run lint
-npm test
-npm run build
-```
+Abrir http://127.0.0.1:5174/inicio no mesmo computador. O launcher `node start-preview.mjs` é opcional e não cria serviço/autostart. Não abrir index.html por duplo clique.
 
-O build gera `dist/`, que não faz parte do código versionado.
+## Verificação
 
-## Funcionalidades demonstradas
+`npm test`, `npm run typecheck`, `npm run lint`, `npm run build` e `npx tsc -p tests/browser/tsconfig.json`.
 
-- Dashboard, agenda diária/semanal/mensal e consulta de agendamentos.
-- Criação de agendamentos em memória, com detecção de conflitos.
-- Consulta de clientes, profissionais, serviços e produtos; pesquisa e paginação do catálogo.
-- Comandas, assinaturas, metas e indicadores gerenciais ilustrativos.
+C01 preserva os 183 testes do conjunto integrado. O harness em tests/browser usa dados sintéticos em origem separada; nunca é importado pelo aplicativo real. Consultar [cobertura e limites](docs/checkpoint-2026-10-29.md) e [fronteiras da equipe](docs/access-boundaries.md).
 
-`src/demo.ts` contém as fixtures sintéticas e o repositório em memória. `src/domain.ts` concentra tipos e cálculos. As telas ficam em `src/main.ts`, `src/agenda-view.ts` e `src/catalog-view.ts`; navegação e rotas em `src/shell.ts` e `src/routing.ts`. `tests/` verifica domínio, agenda, catálogo e rotas.
+## Dados e acesso
 
-## Limites do protótipo
-
-As alterações existem apenas na memória da aba e desaparecem ao recarregar. Não há autenticação, banco de dados, persistência, pagamento, envio de mensagens, exportação ou integrações externas. Cadastros e estoque são consultas ilustrativas. Disponibilidade automática não está implementada; espaços vazios na agenda não garantem vaga.
-
-Indicadores usam outubro de 2026 como período fixo. A agenda abre em 28/10/2026; o botão Hoje segue a data local do navegador. Agenda e produção são amostras independentes: criar agendamento não gera produção, pagamento ou comissão.
-
-Valores monetários são representados em centavos. Produção por competência e caixa por liquidação são conceitos separados. A comissão de 40% é uma estimativa fictícia; resultado líquido não é calculado sem custos, impostos e taxas. Caixa não é conciliado com produção e não representa extrato real. Clientes distintos são recalculados por período e escopo, sem somar totais parciais.
-
-Referências a serviços futuros na interface são apenas propostas. Antes de uso real, implementar e validar backend, permissões, isolamento de dados, persistência, regras operacionais e conciliação. Este repositório não realiza deploy.
+Configuração, registros e relatórios privados não acompanham este código. Auth, leitura remota, gravações e cobranças permanecem inativos por padrão. Não incluir senha SMTP, chave privilegiada, dados reais ou exports no repositório. Login não concede automaticamente acesso de equipe. Este checkpoint antecede a nova área mobile dos profissionais e as novas informações comerciais da apresentação.

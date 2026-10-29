@@ -8,6 +8,7 @@ export const routes = [
   "Comandas",
   "Assinaturas",
   "Financeiro",
+  "Relatórios",
   "Raio-X",
   "Metas",
   "Configurações",
