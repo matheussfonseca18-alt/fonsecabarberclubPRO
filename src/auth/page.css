@@ -1,0 +1,137 @@
+.auth-page {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 32px 20px;
+  background:
+    radial-gradient(ellipse at 25% 0%, #30281c 0, transparent 52%), #101110;
+  color: #eee9df;
+}
+.auth-card {
+  width: min(100%, 570px);
+  padding: 40px;
+  border: 1px solid #4a402c;
+  border-radius: 18px;
+  background: #191a17;
+  box-shadow: 0 22px 70px #0005;
+}
+.auth-brand {
+  display: block;
+  color: #ddbd7d;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  text-decoration: none;
+}
+.auth-brand span {
+  display: block;
+  color: #b4ada0;
+  font-size: 10px;
+  letter-spacing: 5px;
+  margin: 5px 0 32px;
+}
+.auth-label {
+  color: #bba575;
+  font-size: 10px;
+  letter-spacing: 1.4px;
+}
+.auth-card h1 {
+  font-size: 28px;
+  margin: 12px 0;
+}
+.auth-intro,
+.auth-footnote {
+  font-size: 14px;
+  line-height: 1.65;
+  color: #aaa99f;
+}
+.auth-state {
+  padding: 18px;
+  margin: 24px 0;
+  border: 1px solid #4a4637;
+  border-radius: 10px;
+  background: #22231e;
+}
+.auth-state b {
+  font-size: 13px;
+  color: #ddbd7d;
+}
+.auth-state p {
+  font-size: 14px;
+  line-height: 1.65;
+  margin: 8px 0 0;
+}
+.auth-state[data-auth-status="error"],
+.auth-state[data-auth-status="expired"] {
+  border-color: #7e5142;
+}
+.auth-card form {
+  display: grid;
+  gap: 10px;
+}
+.auth-card label {
+  font-size: 13px;
+}
+.auth-card input {
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px;
+  border-radius: 8px;
+  border: 1px solid #514a39;
+  background: #11120f;
+  color: #f2eee5;
+}
+.auth-card button {
+  padding: 13px 18px;
+  border: 1px solid #d4b578;
+  border-radius: 8px;
+  background: #d4b578;
+  color: #181812;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.auth-card button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.auth-card button.secondary {
+  background: transparent;
+  color: #d4b578;
+}
+.auth-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: 20px;
+}
+.auth-actions a {
+  color: #d4b578;
+  font-size: 14px;
+}
+.auth-footnote {
+  font-size: 12px;
+  margin-top: 26px;
+}
+.auth-card :focus-visible {
+  outline: 2px solid #edcf93;
+  outline-offset: 4px;
+}
+@media (max-width: 600px) {
+  .auth-page {
+    padding: 20px 14px;
+  }
+  .auth-card {
+    padding: 27px 22px;
+  }
+  .auth-card h1 {
+    font-size: 24px;
+  }
+  .auth-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

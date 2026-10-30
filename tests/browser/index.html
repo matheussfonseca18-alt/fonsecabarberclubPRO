@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TESTE ISOLADO — booking</title>
+  </head>
+  <body>
+    <aside
+      id="test-toolbar"
+      style="
+        padding: 16px;
+        background: #ffe7a0;
+        color: #171717;
+        font: 14px/1.5 system-ui;
+        border-bottom: 3px solid #8b6200;
+      "
+    >
+      <strong
+        >AMBIENTE DE TESTE ISOLADO · DADOS SINTÉTICOS · SEM RESERVAS</strong
+      >
+      <p>
+        Data sintética: 01/11/2050 · UTC. Esta página não é o aplicativo real.
+      </p>
+      <label for="test-response">Resposta de disponibilidade</label>
+      <select id="test-response">
+        <option value="normal">Consulta normal</option>
+        <option value="manual">Pendente manual</option>
+        <option value="space">Responder durante Espaço</option>
+        <option value="empty">Sem vagas confirmadas</option>
+        <option value="missing">Bloqueios ausentes</option>
+        <option value="error">Erro de consulta</option>
+      </select>
+      <button id="test-release">Liberar resposta pendente</button>
+      <button id="test-reset">Reiniciar cenário</button>
+      <output id="test-events" aria-live="polite"></output>
+    </aside>
+    <div id="app"></div>
+    <script type="module" src="/harness.ts"></script>
+  </body>
+</html>

@@ -2,6 +2,29 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
+    <meta name="referrer" content="no-referrer" />
+    <script>
+      // Run before module imports. Keep auth material only in this document's
+      // temporary memory, never history state, storage, referrers or logs.
+      (() => {
+        const params = new URLSearchParams(location.search);
+        const authReturn =
+          location.pathname === "/auth/callback" ||
+          ["code", "sb_flow_id", "access_token", "refresh_token"].some((k) =>
+            params.has(k),
+          ) ||
+          /(?:^#|&)(?:access_token|refresh_token|code)=/.test(location.hash);
+        if (authReturn) {
+          window.__fonsecaAuthReturn = {
+            origin: location.origin,
+            pathname: location.pathname,
+            search: location.search,
+            hash: location.hash,
+          };
+          history.replaceState(null, "", "/auth/callback");
+        }
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#101110" />
     <title>Fonseca Barber Club • Gestão</title>
@@ -24,11 +47,11 @@
           border-radius: 12px;
         "
       >
-        <small style="color: #c7a66b">FONSECA BARBER CLUB · DEMONSTRAÇÃO</small>
+        <small style="color: #c7a66b">FONSECA BARBER CLUB</small>
         <h1 id="boot-title">Abrindo o sistema…</h1>
-        <p id="boot-message">Aguarde o carregamento do preview local.</p>
-        <a href="http://127.0.0.1:5174/#Dashboard" style="color: #d9bb80"
-          >Abrir pelo endereço local</a
+        <p id="boot-message">Aguarde o carregamento do aplicativo.</p>
+        <a id="boot-retry" href="/inicio" style="color: #d9bb80"
+          >Abrir página inicial</a
         >
         <noscript
           ><p>
@@ -48,9 +71,11 @@
           document.getElementById("boot-message").textContent = message;
         };
         if (location.protocol === "file:") {
+          document.getElementById("boot-retry").href =
+            "http://127.0.0.1:5174/inicio";
           showFailure(
             "Abra o sistema pelo servidor local",
-            "Este index.html não funciona por duplo clique. Execute npm run dev -- --port 5174 --strictPort na pasta do projeto e abra http://127.0.0.1:5174/. Nenhum dado foi perdido.",
+            "Este index.html não funciona por duplo clique. Execute start-preview.cmd na pasta do projeto e abra http://127.0.0.1:5174/. Nenhum dado foi perdido.",
           );
         } else {
           window.addEventListener(
@@ -58,21 +83,21 @@
             () =>
               showFailure(
                 "Não foi possível iniciar o sistema",
-                "O carregamento do aplicativo falhou. Recarregue a página; se persistir, execute npm run dev -- --port 5174 --strictPort e consulte a saída do terminal.",
+                "O carregamento do aplicativo falhou. Recarregue a página ou tente abrir a página inicial. Se persistir, informe o endereço ao responsável pelo sistema.",
               ),
             true,
           );
           window.addEventListener("unhandledrejection", () =>
             showFailure(
               "Não foi possível iniciar o sistema",
-              "Houve uma falha durante a inicialização. Recarregue a página ou reinicie o preview com npm run dev -- --port 5174 --strictPort.",
+              "Houve uma falha durante a inicialização. Recarregue a página ou tente abrir a página inicial.",
             ),
           );
           setTimeout(
             () =>
               showFailure(
                 "O carregamento está demorando",
-                "O aplicativo ainda não iniciou. Confirme se npm run dev -- --port 5174 --strictPort está ativo e recarregue esta página.",
+                "O aplicativo ainda não iniciou. Verifique sua conexão e recarregue esta página.",
               ),
             12000,
           );
