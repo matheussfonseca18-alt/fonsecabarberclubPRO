@@ -37,7 +37,7 @@ export function startLanding() {
           ${visit ? '<a href="#encontre">Onde estamos</a>' : ""}
           <a href="#experiencia">A experiência</a>
         </nav>
-        <a class="fc-home__team-link" href="/auth/login">
+        <a class="fc-home__team-link" href="#equipe">
           Área da equipe <span aria-hidden="true">↗</span>
         </a>
       </header>
@@ -124,13 +124,17 @@ export function startLanding() {
 
         ${visit}
 
-        <section class="fc-home__team" aria-labelledby="fc-home-team-title">
+        <section id="equipe" class="fc-home__team" aria-labelledby="fc-home-team-title">
           <div>
             <p class="fc-home__eyebrow">ÁREA INTERNA</p>
             <h2 id="fc-home-team-title">Faz parte da equipe?</h2>
-            <p>Continue para a tela de acesso do sistema.</p>
+            <p>Conheça as áreas do sistema. Consultas reais e gravações ainda não estão liberadas.</p>
           </div>
-          <a class="fc-home__button fc-home__button--outline" href="/auth/login">Acessar sistema <span aria-hidden="true">↗</span></a>
+          <nav class="fc-home__team-actions" aria-label="Áreas do sistema">
+            <a class="fc-home__button fc-home__button--outline" href="/barbeiro">Área do barbeiro <span aria-hidden="true">↗</span></a>
+            <a class="fc-home__button fc-home__button--outline" href="/?mode=real#Dashboard">Abrir gestão <span aria-hidden="true">↗</span></a>
+            <a class="fc-home__text-link" href="/auth/login">Entrar com minha conta <span aria-hidden="true">↗</span></a>
+          </nav>
         </section>
       </main>
 

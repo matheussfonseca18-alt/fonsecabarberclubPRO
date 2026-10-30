@@ -45,6 +45,7 @@ async function dispatch(address: string) {
     location,
     document: { documentElement: { dataset } },
     resolveDataMode,
+    URLSearchParams,
     load: async (module: string) => {
       loaded.push(module);
       return {
@@ -71,10 +72,34 @@ test("landing has an explicit isolated route, including its trailing slash", asy
   }
 });
 
-test("existing root, agenda and mode selection keep their behavior", async () => {
+test("public root and home anchors open the presentation across refresh", async () => {
   for (const path of [
     "/",
+    "/#inicio",
+    "/#clube",
+    "/#conteudo",
+    "/#experiencia",
+    "/#planos",
+    "/#encontre",
+    "/#equipe",
+    "/?utm_source=synthetic#equipe",
+  ]) {
+    const result = await dispatch(path);
+    assert.deepEqual(result.loaded, ["./landing"]);
+    assert.deepEqual(result.started, ["landing"]);
+    assert.equal(result.dataset.dataMode, "real");
+  }
+});
+
+test("legacy administrative hashes and explicit mode selection keep their behavior", async () => {
+  for (const path of [
+    "/?mode=real",
+    "/?mode=",
+    "/?mode=unknown",
     "/#Agenda",
+    "/#/Agenda",
+    "/#Configura%C3%A7%C3%B5es",
+    "/#Servi%C3%A7os%20%2F%20Produtos",
     "/?mode=real#Agenda",
     "/?mode=demo&mode=demo#Agenda",
     "/inicio-extra",
@@ -84,6 +109,7 @@ test("existing root, agenda and mode selection keep their behavior", async () =>
   assert.deepEqual((await dispatch("/?mode=demo#Agenda")).loaded, [
     "./demo-app",
   ]);
+  assert.deepEqual((await dispatch("/?mode=demo")).loaded, ["./demo-app"]);
 });
 
 test("auth routes keep precedence over demo selection", async () => {

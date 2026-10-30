@@ -69,6 +69,7 @@ async function dispatch(address: string) {
     location,
     document: { documentElement: { dataset } },
     resolveDataMode,
+    URLSearchParams,
     load: async (module: string) => {
       loaded.push(module);
       atLoad.push({
@@ -245,6 +246,7 @@ test("hash callback materials override barber paths and are removed before impor
 test("existing root and ordinary administrative hashes retain their mode rules", async () => {
   for (const hash of ["", "#Agenda", ...ADMIN_HASHES]) {
     for (const query of ["", "?mode=real", ...DEMO_QUERIES.slice(1)]) {
+      if (!query && !hash) continue; // Bare public root now opens the home.
       const result = await dispatch(`/${query}${hash}`);
       assert.deepEqual(result.loaded, ["./real-app"]);
       assert.deepEqual(result.started, ["real"]);

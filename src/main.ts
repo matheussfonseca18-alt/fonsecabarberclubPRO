@@ -12,6 +12,23 @@ const bookingRoute =
 const barberRoute =
   location.pathname === "/barbeiro" ||
   location.pathname.startsWith("/barbeiro/");
+// A bare public address opens the presentation. Explicit modes and legacy
+// administrative hashes retain their existing dispatch and isolation rules.
+const homeRoute =
+  location.pathname === "/inicio" ||
+  location.pathname === "/inicio/" ||
+  (location.pathname === "/" &&
+    !new URLSearchParams(location.search).has("mode") &&
+    [
+      "",
+      "#inicio",
+      "#conteudo",
+      "#clube",
+      "#experiencia",
+      "#planos",
+      "#encontre",
+      "#equipe",
+    ].includes(location.hash));
 const mode =
   authRoute || bookingRoute || barberRoute
     ? "real"
@@ -36,10 +53,7 @@ if (authRoute) {
     // eslint-disable-next-line no-useless-assignment
     authReturn = undefined;
   }
-} else if (
-  location.pathname === "/inicio" ||
-  location.pathname === "/inicio/"
-) {
+} else if (homeRoute) {
   const { startLanding } = await import("./landing");
   startLanding();
 } else if (bookingRoute) {

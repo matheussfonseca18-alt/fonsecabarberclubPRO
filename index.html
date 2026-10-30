@@ -49,9 +49,9 @@
       >
         <small style="color: #c7a66b">FONSECA BARBER CLUB</small>
         <h1 id="boot-title">Abrindo o sistema…</h1>
-        <p id="boot-message">Aguarde o carregamento do preview local.</p>
-        <a href="http://127.0.0.1:5174/#Dashboard" style="color: #d9bb80"
-          >Abrir pelo endereço local</a
+        <p id="boot-message">Aguarde o carregamento do aplicativo.</p>
+        <a id="boot-retry" href="/inicio" style="color: #d9bb80"
+          >Abrir página inicial</a
         >
         <noscript
           ><p>
@@ -71,6 +71,8 @@
           document.getElementById("boot-message").textContent = message;
         };
         if (location.protocol === "file:") {
+          document.getElementById("boot-retry").href =
+            "http://127.0.0.1:5174/inicio";
           showFailure(
             "Abra o sistema pelo servidor local",
             "Este index.html não funciona por duplo clique. Execute start-preview.cmd na pasta do projeto e abra http://127.0.0.1:5174/. Nenhum dado foi perdido.",
@@ -81,21 +83,21 @@
             () =>
               showFailure(
                 "Não foi possível iniciar o sistema",
-                "O carregamento do aplicativo falhou. Recarregue a página; se persistir, execute start-preview.cmd e consulte os logs da pasta .preview.",
+                "O carregamento do aplicativo falhou. Recarregue a página ou tente abrir a página inicial. Se persistir, informe o endereço ao responsável pelo sistema.",
               ),
             true,
           );
           window.addEventListener("unhandledrejection", () =>
             showFailure(
               "Não foi possível iniciar o sistema",
-              "Houve uma falha durante a inicialização. Recarregue a página ou reinicie o preview com start-preview.cmd.",
+              "Houve uma falha durante a inicialização. Recarregue a página ou tente abrir a página inicial.",
             ),
           );
           setTimeout(
             () =>
               showFailure(
                 "O carregamento está demorando",
-                "O aplicativo ainda não iniciou. Confirme se start-preview.cmd está ativo e recarregue esta página.",
+                "O aplicativo ainda não iniciou. Verifique sua conexão e recarregue esta página.",
               ),
             12000,
           );
