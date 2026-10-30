@@ -1,4 +1,4 @@
-import { h } from "./admin-ui";
+import { h } from "./admin-ui.ts";
 import type { EntityKind } from "./data/contracts";
 
 export const registrationRoutes: Record<string, EntityKind> = {
@@ -22,7 +22,7 @@ export const realSections: Record<string, string[]> = {
   ],
   Relatórios: ["Agendamentos", "Clientes", "Resumo", "Aniversariantes"],
   "Raio-X": ["Empresa", "Profissional"],
-  Configurações: ["Conexão", "Etapas", "Critérios de liberação"],
+  Configurações: ["Conexão", "Parâmetros", "Etapas", "Critérios de liberação"],
 };
 const explanations: Record<string, string> = {
   Dashboard:
@@ -60,6 +60,7 @@ export function connectionSteps() {
 }
 
 function settings(section: string) {
+  if (section === "Parâmetros") return '<div data-parameters-read-host></div>';
   if (section === "Etapas")
     return `<section class="panel real-panel"><h2>Preparação por partes</h2>${connectionSteps()}<p>O AppBarber permanece como sistema oficial durante esta preparação. Não haverá importação automática.</p></section>`;
   if (section === "Critérios de liberação")

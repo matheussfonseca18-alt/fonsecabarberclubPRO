@@ -23,7 +23,8 @@ import { renderSettings, settingsDetail } from "./settings-view";
 import { navigation, registryRoutes } from "./shell";
 import { renderAgenda } from "./agenda-view";
 import { renderCatalog, catalogItem } from "./catalog-view";
-import { routes, resolveRoute } from "./routing";
+import { routes, resolveRoute, resolveSettingsSection, settingsSectionHash } from "./routing";
+import { mountParametersRead } from "./parameters-read/mount";
 import { aggregate, money, overlaps, type Appointment } from "./domain";
 import {
   clients,
@@ -47,6 +48,16 @@ const adminStates: Record<string, AdminState> = {};
 let adminMode: "ready" | "loading" | "error" = "ready";
 const adminState = () =>
   adminStates[route] ?? (adminStates[route] = defaultAdminState());
+let parametersMount: ReturnType<typeof mountParametersRead> | undefined;
+function unmountParameters() {
+  parametersMount?.dispose();
+  parametersMount = undefined;
+}
+function syncSettingsSection() {
+  if (route !== "Configurações") return;
+  adminStates[route] = defaultAdminState({ tab: resolveSettingsSection(location.hash) ?? "Identidade" });
+}
+syncSettingsSection();
 const pageTitles: Record<string, string> = {
   Clientes: "Cadastro de Clientes",
   Profissionais: "Cadastro de Profissionais",
@@ -218,6 +229,7 @@ function adminDetail(key: string) {
 }
 function render(focusSelector?: string) {
   if (!routes.includes(route)) route = "Dashboard";
+  unmountParameters();
   root.innerHTML = `<aside id="sidebar"><button class="sidebar-close" data-action="menu" aria-label="Fechar navegação">×</button><a class="brand" href="#Dashboard"><span class="brand-mark">F<span>✦</span></span><span>FONSECA<small>BARBER CLUB</small></span></a><div class="workspace"><span class="workspace-icon">F</span><span>Seu espaço de gestão<small>Unidade demonstrativa</small></span><span>⌄</span></div><span class="nav-label">PRINCIPAL</span>${navigation(route, registryExpanded)}<div class="sidebar-bottom"><span class="status-dot"></span> Ambiente de demonstração<small>Feito para o seu próximo capítulo.</small></div></aside><div class="main-shell"><header class="app-header"><div><button class="menu-button" aria-controls="sidebar" aria-expanded="false" data-action="menu" aria-label="Abrir navegação">☰</button><span class="breadcrumb">Workspace <span>/</span> <b>${route}</b></span></div><div class="header-right">${pill("DEMO • DADOS FICTÍCIOS")}<span class="header-date">28 out, 2026</span><span class="profile">FC</span></div></header><main class="${route === "Agenda" ? "agenda-page" : route === "Serviços" || route === "Produtos" ? "catalog-page" : ""}">${route === "Agenda" ? "" : `<div class="page-heading"><div><span class="eyebrow">FONSECA BARBER CLUB</span><h1>${pageTitles[route] ?? route}</h1><p>${title[route]}</p></div>${route !== "Dashboard" ? "" : '<button class="primary" data-action="schedule">＋ Novo agendamento</button>'}</div>`}<div id="content">${route === "Dashboard" ? dashboard() : route === "Agenda" ? agenda() : route === "Serviços" ? catalog() : route === "Raio-X" ? xray() : route === "Metas" ? goals() : adminContent()}</div><footer><span>FONSECA <b>BARBER CLUB</b></span><span>Todos os nomes e valores são fictícios · Preview local v0.1</span></footer></main></div><div id="toast" role="status"></div><dialog id="modal" aria-labelledby="dialog-title"></dialog>`;
   const modeLink = document.createElement("a");
   modeLink.className = "demo-mode-return";
@@ -225,6 +237,16 @@ function render(focusSelector?: string) {
   modeLink.textContent = "Ir para validação";
   root.querySelector(".header-date")?.replaceWith(modeLink);
   bind();
+  const parametersHost = root.querySelector<HTMLElement>("[data-parameters-read-host]");
+  if (parametersHost) {
+    parametersMount = mountParametersRead(parametersHost);
+    // This reference is documented metadata, even inside the isolated demo shell.
+    const badge = root.querySelector(".header-right .pill");
+    if (badge) badge.textContent = "DEMO • CONSULTA DOCUMENTAL";
+    const footer = root.querySelector("main > footer > span:last-child");
+    if (footer) footer.textContent = "Parâmetros documentados • Valores atuais indisponíveis";
+    modeLink.href = `/?mode=real${settingsSectionHash("Parâmetros")}`;
+  }
   if (focusSelector)
     document.querySelector<HTMLElement>(focusSelector)?.focus();
 }
@@ -360,6 +382,10 @@ function bindAdmin() {
     .forEach(
       (button) =>
         (button.onclick = () => {
+          if (route === "Configurações" && button.dataset.adminTab) {
+            const hash = settingsSectionHash(button.dataset.adminTab);
+            if (location.hash !== hash) { location.hash = hash; return; }
+          }
           const state = adminState();
           adminStates[route] = defaultAdminState({
             tab: button.dataset.adminTab ?? state.tab,
@@ -607,16 +633,19 @@ function bind() {
 }
 window.addEventListener("hashchange", () => {
   route = resolveRoute(location.hash);
+  syncSettingsSection();
   adminMode = "ready";
   catalogPage = 1;
   if (registryRoutes.includes(route)) registryExpanded = true;
   query = "";
   filter = "Todos";
-  render();
+  render(route === "Configurações" ? `[data-admin-tab="${CSS.escape(adminState().tab)}"]` : undefined);
   window.scrollTo(0, 0);
   if (pendingToast) {
     toast(pendingToast);
     pendingToast = "";
   }
 });
+window.addEventListener("pagehide", unmountParameters);
+window.addEventListener("pageshow", event => { if (event.persisted) render(); });
 render();

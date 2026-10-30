@@ -10,7 +10,8 @@ import { renderCatalogRead, renderCatalogReadDetail, defaultCatalogReadFilters, 
 import { h } from "./admin-ui";
 import { modeHref } from "./environment";
 import { navigation, registryRoutes } from "./shell";
-import { resolveRoute } from "./routing";
+import { resolveRoute, resolveSettingsSection, settingsSectionHash } from "./routing";
+import { mountParametersRead } from "./parameters-read/mount";
 import { disconnectedAdapter } from "./data/disconnected-adapter";
 import type { EntityKind } from "./data/contracts";
 import {
@@ -27,6 +28,18 @@ export async function startRealApp() {
   let expanded = registryRoutes.includes(route);
   let revision = 0;
   const sections: Record<string, string> = {};
+  let parametersMount: ReturnType<typeof mountParametersRead> | undefined;
+  let pageHidden = false;
+  function unmountParameters() {
+    parametersMount?.dispose();
+    parametersMount = undefined;
+  }
+  function syncSettingsSection() {
+    if (route !== "Configurações") return;
+    const section = resolveSettingsSection(location.hash);
+    sections[route] = section && realSections[route].includes(section) ? section : realSections[route][0];
+  }
+  syncSettingsSection();
   const catalogFilters: Record<CatalogKind,CatalogReadFilters> = {
     professionals: {...defaultCatalogReadFilters},
     services: {...defaultCatalogReadFilters},
@@ -43,6 +56,7 @@ export async function startRealApp() {
     if (kind) void catalogQuery.load(kind);
   }
   const unsubscribeSession = catalogSessionSource.subscribe(() => {
+    unmountParameters();
     root.querySelector("#content")?.replaceChildren();
     document.querySelector<HTMLDialogElement>("#real-modal")?.close();
     for (const kind of Object.keys(catalogFilters) as CatalogKind[])
@@ -50,12 +64,15 @@ export async function startRealApp() {
     refreshCatalogRoute();
   });
   window.addEventListener("pagehide", () => {
+    pageHidden = true;
+    revision++;
+    unmountParameters();
     catalogQuery.clear();
     root.querySelector("#content")?.replaceChildren();
     document.querySelector<HTMLDialogElement>("#real-modal")?.close();
   });
-  window.addEventListener("pageshow", event => { if (event.persisted) refreshCatalogRoute(); });
-  window.addEventListener("unload", () => { unsubscribeSession(); catalogQuery.dispose(); });
+  window.addEventListener("pageshow", event => { if (event.persisted) { pageHidden = false; refreshCatalogRoute(); void render(); } });
+  window.addEventListener("unload", () => { unmountParameters(); unsubscribeSession(); catalogQuery.dispose(); });
   document.title = "Fonseca Barber Club • Validação";
 
   function setMenu(open: boolean) {
@@ -137,6 +154,7 @@ export async function startRealApp() {
   }
 
   async function render(focus?: string) {
+    if (pageHidden) return;
     const current = ++revision;
     let reason: string;
     try {
@@ -154,12 +172,13 @@ export async function startRealApp() {
       reason =
         "Não foi possível verificar a disponibilidade. Nenhum dado foi consultado.";
     }
-    if (current !== revision) return;
+    if (current !== revision || pageHidden) return;
     const section = sections[route] ?? realSections[route]?.[0] ?? "";
     const readKind=catalogKind();
     const snapshot=catalogQuery.snapshot();
     const catalogResult=snapshot && snapshot.kind === readKind ? snapshot.result : {state:"inactive" as const,message:"Consulta não ativada."};
     const pageContent=readKind ? renderCatalogRead(readKind,catalogResult,catalogFilters[readKind]) : realContent(route,section,reason);
+    unmountParameters();
     root.innerHTML = `<aside id="sidebar"><button class="sidebar-close" data-real-menu aria-label="Fechar navegação">×</button><a class="brand" href="#Dashboard"><span class="brand-mark">F<span>✦</span></span><span>FONSECA<small>BARBER CLUB</small></span></a><div class="workspace"><span class="workspace-icon">F</span><span>Seu espaço de gestão<small>Ambiente de validação</small></span></div><span class="nav-label">PRINCIPAL</span>${navigation(route, expanded)}<div class="sidebar-bottom real-sidebar-bottom"><b>Dados reais · preparação</b><small>Operação ainda não liberada</small><a href="${modeHref("demo", route)}">Abrir demonstração isolada ↗</a></div></aside><div class="main-shell"><header class="app-header"><div><button class="menu-button" aria-controls="sidebar" aria-expanded="false" data-real-menu aria-label="Abrir navegação">☰</button><span class="breadcrumb">Validação <span>/</span> <b>${h(route)}</b></span></div><div class="header-right"><span class="pill">${catalogReadActivation.enabled ? "VALIDAÇÃO · SOMENTE LEITURA" : "VALIDAÇÃO · CONSULTA INATIVA"}</span><span class="profile">FC</span></div></header><main class="real-page"><div class="page-heading"><div><h1>${h(route)}</h1><p>Preparação para dados reais · sem operação em produção</p></div></div><div class="real-mode-notice" role="status"><span aria-hidden="true">◌</span><div><b>Validação dos catálogos</b><span>${catalogReadActivation.enabled ? "Consulta restrita à conta autorizada. Nenhuma edição ou operação em produção está habilitada." : "Consulta preparada, aguardando primeiro login verificado e ativação. Nenhum registro está sendo consultado."}</span></div></div><div id="content">${pageContent}</div><footer><span>FONSECA <b>BARBER CLUB</b></span><span>Validação local · nenhuma gravação habilitada</span></footer></main></div><dialog id="real-modal" aria-labelledby="real-dialog-title"></dialog>`;
     root
       .querySelectorAll("[data-real-menu]")
@@ -181,6 +200,10 @@ export async function startRealApp() {
       .querySelectorAll<HTMLElement>("[data-real-section]")
       .forEach((button) =>
         button.addEventListener("click", () => {
+          if (route === "Configurações") {
+            const hash = settingsSectionHash(button.dataset.realSection!);
+            if (location.hash !== hash) { location.hash = hash; return; }
+          }
           sections[route] = button.dataset.realSection!;
           void render(`[data-real-section="${CSS.escape(sections[route])}"]`);
         }),
@@ -221,6 +244,12 @@ export async function startRealApp() {
       }
     });
     bindCatalog();
+    const parametersHost = root.querySelector<HTMLElement>("[data-parameters-read-host]");
+    if (parametersHost) {
+      parametersMount = mountParametersRead(parametersHost);
+      const demoLink = root.querySelector<HTMLAnchorElement>(".real-sidebar-bottom a");
+      if (demoLink) demoLink.href = `/?mode=demo${settingsSectionHash("Parâmetros")}`;
+    }
     const authSession = await catalogSessionSource.getSession();
     if (current !== revision) return;
     const authControl = document.createElement(authSession ? "button" : "a");
@@ -237,9 +266,10 @@ export async function startRealApp() {
   }
   window.addEventListener("hashchange", () => {
     route = resolveRoute(location.hash);
+    syncSettingsSection();
     if (registryRoutes.includes(route)) expanded = true;
     refreshCatalogRoute();
-    void render();
+    void render(route === "Configurações" ? `[data-real-section="${CSS.escape(sections[route])}"]` : undefined);
     window.scrollTo(0, 0);
   });
   refreshCatalogRoute();

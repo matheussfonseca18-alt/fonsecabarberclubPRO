@@ -1,0 +1,104 @@
+.wp-document {
+  margin: 0;
+  background: #101110;
+  color: #e8e7e2;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+.wp-host {
+  max-width: 1600px;
+  min-height: 100svh;
+  margin: auto;
+}
+.wp-host-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px 28px;
+  border-bottom: 1px solid #383c34;
+}
+.wp-host-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  text-decoration: none;
+  color: #d4b67c;
+  font-family: Georgia, serif;
+  font-size: 22px;
+  letter-spacing: 0.08em;
+}
+.wp-host-brand small {
+  font:
+    9px "Segoe UI",
+    sans-serif;
+  letter-spacing: 0.25em;
+}
+.wp-host-header nav {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.wp-host-header nav a,
+.wp-host-missing a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 12px;
+  color: #e8e7e2;
+  text-underline-offset: 4px;
+  font-size: 13px;
+}
+.wp-host a:focus-visible,
+.wp-host main:focus-visible {
+  outline: 3px solid #c7a66b;
+  outline-offset: 4px;
+}
+.wp-host-state {
+  margin: 20px 28px 0;
+  color: #d4b67c;
+  font-size: 12px;
+  letter-spacing: 0.035em;
+}
+.wp-host-footer {
+  padding: 20px 28px 28px;
+  color: #a7aaa1;
+  font-size: 12px;
+  line-height: 1.6;
+  max-width: 800px;
+}
+.wp-host-skip {
+  position: absolute;
+  top: -80px;
+  left: 20px;
+  z-index: 5;
+  background: #c7a66b;
+  color: #101110;
+  padding: 12px 16px;
+}
+.wp-host-skip:focus {
+  top: 12px;
+}
+.wp-host-missing {
+  padding: 40px 28px;
+}
+@media (max-width: 600px) {
+  .wp-host-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px 16px 12px;
+  }
+  .wp-host-header nav {
+    gap: 0;
+    margin-left: -12px;
+  }
+  .wp-host-header nav a {
+    font-size: 12px;
+  }
+  .wp-host-state {
+    margin-inline: 16px;
+  }
+  .wp-host-footer {
+    padding: 16px;
+  }
+}

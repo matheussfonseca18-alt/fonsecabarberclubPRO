@@ -1,0 +1,77 @@
+{
+  "name": "Fonseca WhatsApp - ingresso interno BLOQUEADO",
+  "active": false,
+  "nodes": [
+    {
+      "id": "fonseca-ingress-trigger",
+      "name": "Backend event - disabled",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [0, 0],
+      "disabled": true,
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "fonseca-whatsapp-internal-review-only",
+        "authentication": "headerAuth",
+        "responseMode": "lastNode",
+        "responseData": "noData",
+        "options": {
+          "rawBody": true,
+          "responseCode": {
+            "values": {
+              "responseCode": "customCode",
+              "customCode": 503
+            }
+          }
+        }
+      },
+      "notesInFlow": true,
+      "notes": "Esqueleto inativo. Destino futuro exclusivo de eventos autenticados pelo backend apos commit da inbox. Nao apontar WAHA aqui. Header Auth sem credencial intencionalmente. Raw Body nao verifica HMAC."
+    },
+    {
+      "id": "fonseca-ingress-stop",
+      "name": "BLOCK - integration not configured",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [320, 0],
+      "disabled": false,
+      "continueOnFail": false,
+      "retryOnFail": false,
+      "onError": "stopWorkflow",
+      "parameters": {
+        "errorType": "errorMessage",
+        "errorMessage": "FONSECA_INTEGRATION_BLOCKED: esqueleto de revisao; autenticacao interna, contrato e processamento duravel nao configurados. Nenhum evento foi aceito para processamento de negocio por este workflow."
+      },
+      "notesInFlow": true,
+      "notes": "Bloqueio incondicional imediatamente apos o gatilho. Nao remover para testar com dados reais. Sem saidas, retry ou tratamento que converta a falha em sucesso."
+    },
+    {
+      "id": "fonseca-ingress-note",
+      "name": "Ingress design - not executable",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [-40, 220],
+      "parameters": {
+        "content": "## ESQUELETO INATIVO - SEM PROCESSAMENTO\n\nWAHA -> BACKEND: HMAC do corpo bruto, escopo confiavel, inbox em transacao e deduplicacao. ACK ao WAHA somente apos commit.\n\nBACKEND -> n8n: credencial interna propria e contrato minimo versionado. Este Webhook desabilitado apenas reserva a forma desse ponto; nao valida HMAC, nao persiste inbox e nao processa conversas.\n\nFuturo: claim duravel, efeitos idempotentes e callback autenticado ao backend com credencial diferente. Nenhum texto recebido pode escolher endpoint, tenant ou ferramenta.\n\nNao publicar, nao iniciar escuta de teste e nao associar credenciais para usar este esqueleto em operacao. Ver docs/n8n.md.",
+        "height": 420,
+        "width": 700,
+        "color": 3
+      }
+    }
+  ],
+  "connections": {
+    "Backend event - disabled": {
+      "main": [[{"node": "BLOCK - integration not configured", "type": "main", "index": 0}]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": false,
+    "saveExecutionProgress": false,
+    "saveDataSuccessExecution": "none",
+    "saveDataErrorExecution": "none",
+    "executionTimeout": 30
+  },
+  "pinData": {},
+  "tags": []
+}

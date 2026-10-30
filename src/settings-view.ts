@@ -4,8 +4,6 @@ import {
   badge,
   dataTable,
   detailContent,
-  h,
-  matchQuery,
   notice,
   panel,
   tabs,
@@ -20,28 +18,6 @@ const sections = [
   "Avaliações",
   "Conexões",
 ];
-const pendingParameters = [
-  [
-    "Identificação dos campos",
-    "Pendente",
-    "Associar cada parâmetro ao seu rótulo antes de definir valores.",
-  ],
-  [
-    "Padrões e unidades",
-    "Pendente",
-    "Dias, horas e opções genéricas foram observados; a associação a regras não foi validada.",
-  ],
-  [
-    "Permissões e validação",
-    "Pendente",
-    "Definir quem pode alterar, campos obrigatórios e histórico de mudanças.",
-  ],
-  [
-    "Salvamento",
-    "Não conectado",
-    "A demonstração não grava configurações nem presume os efeitos de Salvar.",
-  ],
-];
 export function renderSettings(state: AdminState): string {
   const active = sections.includes(state.tab) ? state.tab : sections[0];
   const navigation = tabs(sections, active);
@@ -55,27 +31,7 @@ export function renderSettings(state: AdminState): string {
       )
     );
   if (active === "Parâmetros") {
-    const rows = pendingParameters
-      .filter((row) => matchQuery(state.query, ...row))
-      .map(([label, status, note]) => [h(label), badge(status), h(note)]);
-    return (
-      navigation +
-      notice(
-        "Os campos operacionais ainda precisam de especificação. Não há valores padrão ou controles de salvamento simulados.",
-      ) +
-      panel(
-        "Configuração de parâmetros",
-        toolbar(state) +
-          dataTable(
-            "Definições pendentes",
-            ["Definição", "Situação", "Próximo passo"],
-            rows,
-            state,
-          ) +
-          `<div class="admin-actions">${actionButton("settings:parameters", "Entender as pendências")}</div>`,
-        "Organização própria das lacunas do levantamento. Estes itens não representam os campos do AppBarber.",
-      )
-    );
+    return navigation + '<div data-parameters-read-host></div>';
   }
   if (active === "Funcionamento")
     return (
@@ -156,8 +112,8 @@ export function renderSettings(state: AdminState): string {
 export function settingsDetail(key: string): string | undefined {
   const descriptions: Record<string, [string, string]> = {
     "settings:parameters": [
-      "Parâmetros pendentes",
-      "É necessário confirmar rótulos, valores permitidos, unidades, padrões, validações e efeitos de cada parâmetro. As opções genéricas observadas não foram convertidas em regras presumidas. Não há configuração salva neste preview.",
+      "Consulta dos parâmetros documentados",
+      "A referência contém 72 rótulos: 35 listas completas, duas amostradas, 30 sem opções recuperadas e cinco campos de texto. Valores atuais, padrões, obrigatoriedade e efeitos continuam desconhecidos. Esta consulta não salva configurações nem executa regras operacionais.",
     ],
     "settings:hours": [
       "Horário de referência",

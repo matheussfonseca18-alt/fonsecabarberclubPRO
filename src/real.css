@@ -264,6 +264,11 @@
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+@media (max-width: 360px) {
+  html[data-data-mode="real"] .app-header .profile {
+    display: none;
+  }
+}
 @media (max-width: 850px) {
   .real-stage-grid {
     gap: 10px;

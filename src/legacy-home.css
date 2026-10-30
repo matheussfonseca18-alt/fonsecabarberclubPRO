@@ -1,0 +1,814 @@
+/* /inicio only: legacy composition without its dependencies or global effects. */
+.fc-home-document {
+  margin: 0;
+  background: #09090b;
+}
+.fc-home {
+  --fc-home-gold: #c5a059;
+  --fc-home-bg: #09090b;
+  --fc-home-ink: #f5f0e7;
+  --fc-home-muted: #b8b3aa;
+  --fc-home-line: #35312a;
+  box-sizing: border-box;
+  color: var(--fc-home-ink);
+  background: var(--fc-home-bg);
+  color-scheme: dark;
+  font:
+    400 16px/1.6 "Segoe UI",
+    Arial,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.fc-home *,
+.fc-home *::before,
+.fc-home *::after {
+  box-sizing: inherit;
+}
+.fc-home :where(h1, h2, h3, p, figure) {
+  margin: 0;
+}
+.fc-home :where(a) {
+  color: inherit;
+  text-decoration: none;
+}
+.fc-home :where(button, a) {
+  -webkit-tap-highlight-color: transparent;
+}
+.fc-home :where(a, button):focus-visible {
+  outline: 3px solid #e2be78;
+  outline-offset: 5px;
+}
+.fc-home ::selection {
+  color: #09090b;
+  background: #c5a059;
+}
+.fc-home :where(section[id], main[id]) {
+  scroll-margin-top: 100px;
+}
+.fc-home .fc-home__container {
+  width: min(1180px, calc(100% - 80px));
+  margin-inline: auto;
+}
+.fc-home .fc-home__main {
+  width: 100%;
+  max-width: none;
+  padding: 0;
+  margin: 0;
+}
+.fc-home .fc-home__skip {
+  position: fixed;
+  left: 20px;
+  top: 12px;
+  z-index: 50;
+  transform: translateY(-150%);
+  background: #e2be78;
+  color: #15110a;
+  padding: 12px 18px;
+  border-radius: 8px;
+}
+.fc-home .fc-home__skip:focus {
+  transform: none;
+}
+.fc-home .fc-home__header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  height: auto;
+  padding: 0;
+  background: #09090bf5;
+  border-bottom: 1px solid #c5a05926;
+}
+.fc-home .fc-home__header-inner {
+  width: min(1320px, calc(100% - 64px));
+  min-height: 86px;
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 26px;
+}
+.fc-home .fc-home__brand {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  flex-shrink: 0;
+}
+.fc-home .fc-home__identity-text {
+  font:
+    600 16px/1.4 "Segoe UI",
+    Arial,
+    sans-serif;
+  letter-spacing: 0;
+}
+.fc-home .fc-home__logo-stage {
+  display: block;
+  min-width: 0;
+  max-width: 180px;
+}
+.fc-home .fc-home__logo-depth {
+  width: 100%;
+  filter: none;
+}
+.fc-home .fc-home__official-logo {
+  display: block;
+  width: auto;
+  max-width: 180px;
+  max-height: 54px;
+  height: auto;
+  object-fit: contain;
+  filter: none;
+  transform: none;
+}
+.fc-home .fc-home__nav {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin-left: auto;
+}
+.fc-home .fc-home__nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: #cbc5b9;
+  font-size: 12px;
+}
+.fc-home .fc-home__nav a:hover {
+  color: #e2be78;
+}
+.fc-home .fc-home__header-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.fc-home .fc-home__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  min-height: 56px;
+  padding: 15px 29px;
+  border: 1px solid #c5a059;
+  border-radius: 40px;
+  background: #c5a059;
+  color: #12100b;
+  font:
+    700 13px/1.4 "Segoe UI",
+    Arial,
+    sans-serif;
+  text-align: center;
+  transition:
+    background-color 0.16s,
+    border-color 0.16s;
+}
+.fc-home .fc-home__button:hover {
+  background: #dbba7b;
+  border-color: #dbba7b;
+}
+.fc-home .fc-home__button--small {
+  min-height: 44px;
+  padding: 11px 24px;
+}
+.fc-home .fc-home__button--outline {
+  color: #ece5d7;
+  background: #ffffff03;
+  border-color: #61543b;
+}
+.fc-home .fc-home__button--outline:hover {
+  background: #c5a05912;
+  border-color: #c5a059;
+}
+.fc-home .fc-home__menu-toggle {
+  display: none;
+}
+.fc-home .fc-home__menu {
+  width: min(360px, calc(100% - 28px));
+  max-height: calc(100dvh - 40px);
+  margin: 20px 14px 20px auto;
+  padding: 24px;
+  border: 1px solid #675438;
+  border-radius: 20px;
+  background: #111113;
+  color: #f5f0e7;
+  box-shadow: 0 24px 90px #0009;
+}
+.fc-home .fc-home__menu::backdrop {
+  background: #000b;
+}
+.fc-home .fc-home__menu-top {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #36322c;
+}
+.fc-home .fc-home__menu h2 {
+  font:
+    600 17px/1.4 "Segoe UI",
+    sans-serif;
+}
+.fc-home .fc-home__menu-close,
+.fc-home .fc-home__menu-toggle {
+  width: 44px;
+  height: 44px;
+  border: 1px solid #574a34;
+  border-radius: 12px;
+  background: #181715;
+  color: #f5f0e7;
+  font: 24px/1 sans-serif;
+  cursor: pointer;
+}
+.fc-home .fc-home__menu nav {
+  display: grid;
+  margin: 18px 0 24px;
+}
+.fc-home .fc-home__menu nav a {
+  padding: 14px 8px;
+  min-height: 48px;
+  border-radius: 8px;
+  color: #ddd5c5;
+}
+.fc-home .fc-home__menu nav a:hover {
+  background: #c5a05912;
+}
+.fc-home .fc-home__menu > .fc-home__button {
+  display: flex;
+}
+.fc-home .fc-home__hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  min-height: min(850px, calc(100svh - 86px));
+  padding: 90px 28px 110px;
+  overflow: hidden;
+  text-align: center;
+  background: #0b0b0d;
+}
+.fc-home .fc-home__hero-atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse at 50% 42%,
+      #b68b4429 0,
+      #6c552314 29%,
+      transparent 62%
+    ),
+    linear-gradient(135deg, #09090b, #13120f 54%, #09090b);
+}
+.fc-home .fc-home__hero-atmosphere::before {
+  content: "";
+  position: absolute;
+  inset: 32px 5%;
+  border-inline: 1px solid #c5a0590c;
+  background: linear-gradient(
+    90deg,
+    transparent 49.9%,
+    #c5a0590a 50%,
+    transparent 50.1%
+  );
+}
+.fc-home .fc-home__hero-copy {
+  max-width: 980px;
+  animation: fc-home-arrive 0.6s ease-out both;
+}
+.fc-home .fc-home__hero-label {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  padding: 9px 18px;
+  border: 1px solid #c5a05940;
+  border-radius: 30px;
+  background: #09090b40;
+  color: #d8b775;
+  font-size: 10px;
+  letter-spacing: 0.19em;
+  font-weight: 600;
+}
+.fc-home .fc-home__hero-label span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #c5a059;
+}
+.fc-home h1 {
+  margin: 27px 0 25px;
+  font:
+    500 clamp(66px, 9vw, 132px)/0.94 Georgia,
+    "Times New Roman",
+    serif;
+  letter-spacing: -0.055em;
+}
+.fc-home em {
+  color: var(--fc-home-gold);
+  font-weight: inherit;
+}
+.fc-home .fc-home__intro {
+  color: #c4bdb1;
+  font-size: clamp(15px, 1.5vw, 18px);
+  line-height: 1.8;
+}
+.fc-home .fc-home__hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 35px;
+}
+.fc-home .fc-home__scroll-cue {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  color: #b3a387;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+}
+.fc-home .fc-home__scroll-cue > span:last-child {
+  font-size: 19px;
+}
+.fc-home .fc-home__eyebrow {
+  margin-bottom: 18px;
+  color: #c5a059;
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.22em;
+}
+.fc-home h2 {
+  font:
+    500 clamp(35px, 4.8vw, 62px)/1.1 Georgia,
+    "Times New Roman",
+    serif;
+  letter-spacing: -0.035em;
+}
+.fc-home .fc-home__club {
+  border-block: 1px solid #c5a0591c;
+  background: #111113;
+  padding-block: 70px;
+}
+.fc-home .fc-home__club-inner {
+  display: grid;
+  grid-template-columns: 0.35fr 1fr 1fr;
+  align-items: center;
+  gap: 45px;
+}
+.fc-home .fc-home__club-inner > .fc-home__eyebrow {
+  margin: 0;
+}
+.fc-home .fc-home__club h2 {
+  font-size: clamp(34px, 3.8vw, 49px);
+}
+.fc-home .fc-home__club-inner > p:last-child {
+  color: #b8b3aa;
+  font-size: 15px;
+  line-height: 1.9;
+  max-width: 42ch;
+}
+.fc-home .fc-home__experience {
+  padding-block: 100px;
+}
+.fc-home .fc-home__section-heading {
+  text-align: center;
+  margin-bottom: 46px;
+}
+.fc-home .fc-home__cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+.fc-home .fc-home__card {
+  min-width: 0;
+  border: 1px solid #373126;
+  border-radius: 24px;
+  padding: 32px;
+  background: linear-gradient(145deg, #1a1916, #111113 70%);
+}
+.fc-home .fc-home__card-number {
+  display: inline-grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid #c5a0592b;
+  border-radius: 16px;
+  background: #c5a0590d;
+  color: #d8b775;
+  font:
+    italic 24px Georgia,
+    serif;
+  margin-bottom: 32px;
+}
+.fc-home .fc-home__card-label {
+  color: #c5a059;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  margin-bottom: 14px;
+}
+.fc-home .fc-home__card h3 {
+  font:
+    500 26px/1.22 Georgia,
+    serif;
+  letter-spacing: -0.02em;
+  margin-bottom: 17px;
+}
+.fc-home .fc-home__card > p:last-child {
+  color: #b8b3aa;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.fc-home .fc-home__band {
+  background: #111113;
+  border-block: 1px solid #c5a0591c;
+}
+.fc-home .fc-home__plans,
+.fc-home .fc-home__gallery {
+  padding-block: 90px;
+}
+.fc-home .fc-home__plans-heading > p {
+  color: #b8b3aa;
+  max-width: 48ch;
+  margin: 20px auto 0;
+}
+.fc-home .fc-home__plan-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr));
+  gap: 20px;
+}
+.fc-home .fc-home__plan {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid #625034;
+  border-radius: 24px;
+  padding: 32px;
+  background: #171716;
+}
+.fc-home .fc-home__plan-top {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.fc-home .fc-home__plan-index {
+  color: #c5a059;
+  font-size: 10px;
+}
+.fc-home .fc-home__plan h3 {
+  font-size: 21px;
+  font-weight: 550;
+  overflow-wrap: anywhere;
+}
+.fc-home .fc-home__price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-block: 30px;
+  border-bottom: 1px solid #39342a;
+}
+.fc-home .fc-home__price strong {
+  color: #d4b06b;
+  font-size: clamp(34px, 4vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+}
+.fc-home .fc-home__price > span {
+  font-size: 13px;
+  color: #c4bcae;
+}
+.fc-home .fc-home__plan ul {
+  display: grid;
+  gap: 12px;
+  list-style: none;
+  margin: 24px 0;
+  padding: 0;
+}
+.fc-home .fc-home__plan li {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  color: #d0c8bb;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+.fc-home .fc-home__plan li > span {
+  color: #c5a059;
+}
+.fc-home .fc-home__plan-terms {
+  margin-top: auto;
+  color: #b8b3aa;
+  font-size: 12px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.fc-home .fc-home__gallery-heading {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.fc-home .fc-home__gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.fc-home .fc-home__gallery-photo {
+  min-width: 0;
+}
+.fc-home .fc-home__gallery-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 22px;
+  background: #1c1b18;
+}
+.fc-home .fc-home__gallery-caption {
+  font-size: 13px;
+  color: #b8b3aa;
+  padding: 12px 4px;
+  overflow-wrap: anywhere;
+}
+.fc-home .fc-home__booking {
+  padding-block: 100px;
+  text-align: center;
+  border-block: 1px solid #c5a0591c;
+  background:
+    radial-gradient(ellipse at 50% 25%, #c5a05912, transparent 70%), #101011;
+}
+.fc-home .fc-home__booking > div > p:not(.fc-home__eyebrow) {
+  color: #b8b3aa;
+  margin: 25px 0 32px;
+}
+.fc-home .fc-home__visit,
+.fc-home .fc-home__contact,
+.fc-home .fc-home__team {
+  padding-block: 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 60px;
+  border-bottom: 1px solid #35312a;
+}
+.fc-home .fc-home__visit-detail {
+  color: #c4bcae;
+}
+.fc-home .fc-home__visit address {
+  font-style: normal;
+  font-size: 17px;
+  line-height: 1.9;
+}
+.fc-home .fc-home__text-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 12px;
+  color: #d9b572;
+  margin-top: 16px;
+}
+.fc-home .fc-home__contact p:not(.fc-home__eyebrow),
+.fc-home .fc-home__team p:not(.fc-home__eyebrow) {
+  color: #b8b3aa;
+  margin-top: 20px;
+  max-width: 44ch;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.fc-home .fc-home__socials {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.fc-home .fc-home__socials a {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding: 12px 22px;
+  border: 1px solid #615136;
+  border-radius: 40px;
+  color: #dfc28c;
+  font-size: 14px;
+}
+.fc-home .fc-home__socials a:hover {
+  background: #c5a0590d;
+}
+.fc-home .fc-home__team-actions {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid #35312a;
+}
+.fc-home .fc-home__team-actions a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 62px;
+  padding: 18px 2px;
+  border-bottom: 1px solid #35312a;
+  color: #e4d9c4;
+  font-size: 15px;
+}
+.fc-home .fc-home__team-actions a:hover {
+  color: #e2be78;
+}
+.fc-home .fc-home__team-actions small {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 10px;
+  color: #c5a059;
+}
+.fc-home .fc-home__footer {
+  display: block;
+  margin: 0;
+  padding: 50px 0;
+  background: #070708;
+  border: 0;
+}
+.fc-home .fc-home__footer > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  text-align: center;
+}
+.fc-home .fc-home__footer p {
+  color: #aaa397;
+  font-size: 13px;
+}
+.fc-home .fc-home__footer .fc-home__socials {
+  justify-content: center;
+}
+.fc-home .fc-home__back-top {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 16px;
+  color: #b8b3aa;
+  font-size: 12px;
+}
+.fc-home .fc-home__sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+@keyframes fc-home-arrive {
+  from {
+    opacity: 0.01;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 1100px) {
+  .fc-home .fc-home__nav {
+    gap: 16px;
+  }
+  .fc-home .fc-home__club-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 25px 40px;
+  }
+  .fc-home .fc-home__club-inner > .fc-home__eyebrow {
+    grid-column: 1/-1;
+  }
+}
+@media (max-width: 979px) {
+  .fc-home .fc-home__nav {
+    display: none;
+  }
+  .fc-home .fc-home__menu-toggle {
+    display: inline-grid;
+    place-items: center;
+  }
+  .fc-home .fc-home__header-inner {
+    min-height: 76px;
+  }
+  .fc-home .fc-home__hero {
+    min-height: 720px;
+  }
+  .fc-home .fc-home__card {
+    padding: 25px;
+  }
+}
+@media (max-width: 700px) {
+  .fc-home .fc-home__container {
+    width: calc(100% - 40px);
+  }
+  .fc-home .fc-home__header-inner {
+    width: calc(100% - 32px);
+    gap: 12px;
+    min-height: 72px;
+  }
+  .fc-home .fc-home__identity-text {
+    max-width: 125px;
+    font-size: 13px;
+  }
+  .fc-home .fc-home__button--small {
+    padding: 10px 16px;
+    font-size: 12px;
+  }
+  .fc-home .fc-home__hero {
+    min-height: calc(100svh - 72px);
+    padding: 70px 20px 110px;
+  }
+  .fc-home h1 {
+    font-size: clamp(64px, 15vw, 88px);
+    margin-block: 26px;
+  }
+  .fc-home .fc-home__hero-actions {
+    flex-direction: column;
+    max-width: 330px;
+    margin-inline: auto;
+    gap: 12px;
+  }
+  .fc-home .fc-home__hero-label {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+  }
+  .fc-home .fc-home__intro {
+    font-size: 15px;
+  }
+  .fc-home .fc-home__desktop-break {
+    display: none;
+  }
+  .fc-home .fc-home__club {
+    padding-block: 52px;
+  }
+  .fc-home .fc-home__club-inner {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .fc-home .fc-home__club h2 {
+    font-size: 39px;
+  }
+  .fc-home .fc-home__experience,
+  .fc-home .fc-home__plans,
+  .fc-home .fc-home__gallery {
+    padding-block: 65px;
+  }
+  .fc-home .fc-home__cards {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .fc-home .fc-home__card {
+    padding: 28px;
+  }
+  .fc-home .fc-home__card-number {
+    margin-bottom: 23px;
+  }
+  .fc-home .fc-home__card h3 {
+    font-size: 29px;
+  }
+  .fc-home .fc-home__section-heading {
+    margin-bottom: 32px;
+  }
+  .fc-home .fc-home__booking {
+    padding-block: 65px;
+  }
+  .fc-home .fc-home__visit,
+  .fc-home .fc-home__contact,
+  .fc-home .fc-home__team {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding-block: 55px;
+  }
+  .fc-home .fc-home__gallery-grid {
+    gap: 12px;
+  }
+  .fc-home .fc-home__gallery-image {
+    border-radius: 14px;
+  }
+  .fc-home .fc-home__plan {
+    padding: 28px;
+  }
+  .fc-home .fc-home__official-logo {
+    max-width: 125px;
+    max-height: 46px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fc-home *,
+  .fc-home *::before,
+  .fc-home *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

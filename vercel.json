@@ -9,6 +9,7 @@
     { "source": "/agendar", "destination": "/index.html" },
     { "source": "/agendar/", "destination": "/index.html" },
     { "source": "/barbeiro/:path*", "destination": "/index.html" },
+    { "source": "/whatsapp/:path*", "destination": "/index.html" },
     { "source": "/auth/login", "destination": "/index.html" },
     { "source": "/auth/callback", "destination": "/index.html" }
   ],

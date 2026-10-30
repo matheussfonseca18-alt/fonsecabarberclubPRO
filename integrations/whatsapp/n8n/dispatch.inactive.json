@@ -1,0 +1,61 @@
+{
+  "name": "Fonseca WhatsApp - despacho BLOQUEADO",
+  "active": false,
+  "nodes": [
+    {
+      "id": "fonseca-dispatch-trigger",
+      "name": "Manual review only",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0],
+      "parameters": {},
+      "notesInFlow": true,
+      "notes": "Unico gatilho. Executar manualmente termina no bloqueio imediatamente seguinte. Nao ha agendamento, polling ou webhook de despacho."
+    },
+    {
+      "id": "fonseca-dispatch-stop",
+      "name": "BLOCK - sending not configured",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [320, 0],
+      "disabled": false,
+      "continueOnFail": false,
+      "retryOnFail": false,
+      "onError": "stopWorkflow",
+      "parameters": {
+        "errorType": "errorMessage",
+        "errorMessage": "FONSECA_SEND_BLOCKED: esqueleto de revisao; dispatcher e politica de envio nao configurados. Nenhuma mensagem foi enviada ou enfileirada por este workflow."
+      },
+      "notesInFlow": true,
+      "notes": "Bloqueio incondicional. Nao existe node de HTTP, WAHA, codigo, fila, banco ou subworkflow."
+    },
+    {
+      "id": "fonseca-dispatch-note",
+      "name": "Dispatch design - not executable",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [-40, 220],
+      "parameters": {
+        "content": "## ESQUELETO INATIVO - NENHUM ENVIO\n\n1. Backend mantem outbox duravel com chave de negocio unica, lease/claim atomico, expiracao e fencing contra worker antigo.\n2. Imediatamente antes de enviar, backend revalida ambiente, acesso, consentimento/opt-out, pausa humana, finalidade, responsavel AppBarber/Fonseca, sessao e limite de tentativas.\n3. Somente backend tem acesso e credencial da API WAHA. n8n nao recebe chave WAHA nem resolve destinatario.\n4. Timeout, conexao perdida apos POST ou resultado ambiguo -> UNKNOWN. Nao repetir automaticamente; reconciliar ACK/ID ou revisao humana.\n5. Callback futuro n8n -> backend usa autenticacao interna separada, contrato estrito, idempotencia e escopo derivados no servidor.\n\nTudo acima e trabalho futuro. Nao remover o bloqueio para ativar envio. Ver docs/n8n.md.",
+        "height": 460,
+        "width": 700,
+        "color": 3
+      }
+    }
+  ],
+  "connections": {
+    "Manual review only": {
+      "main": [[{"node": "BLOCK - sending not configured", "type": "main", "index": 0}]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": false,
+    "saveExecutionProgress": false,
+    "saveDataSuccessExecution": "none",
+    "saveDataErrorExecution": "none",
+    "executionTimeout": 30
+  },
+  "pinData": {},
+  "tags": []
+}

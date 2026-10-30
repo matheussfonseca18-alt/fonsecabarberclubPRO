@@ -12,6 +12,9 @@ const bookingRoute =
 const barberRoute =
   location.pathname === "/barbeiro" ||
   location.pathname.startsWith("/barbeiro/");
+const whatsappRoute =
+  location.pathname === "/whatsapp" ||
+  location.pathname.startsWith("/whatsapp/");
 // A bare public address opens the presentation. Explicit modes and legacy
 // administrative hashes retain their existing dispatch and isolation rules.
 const homeRoute =
@@ -30,7 +33,7 @@ const homeRoute =
       "#equipe",
     ].includes(location.hash));
 const mode =
-  authRoute || bookingRoute || barberRoute
+  authRoute || bookingRoute || barberRoute || whatsappRoute
     ? "real"
     : resolveDataMode(location.search);
 document.documentElement.dataset.dataMode = mode;
@@ -62,6 +65,9 @@ if (authRoute) {
 } else if (barberRoute) {
   const { startBarberPage } = await import("./barber-page");
   startBarberPage();
+} else if (whatsappRoute) {
+  const { startWhatsappPage } = await import("./whatsapp-page");
+  startWhatsappPage();
 } else if (mode === "demo") {
   await import("./demo-app");
 } else {
